@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import Cart from "./components/Cart";
+import List from "./components/List";
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
+
+  const handleAddToCart = ({
+    selectedPizza: { sku, image, name, price },
+    selectedToppings,
+  }) => {
+    setCartItems([
+      ...cartItems,
+      { sku, image, name, price, toppings: selectedToppings },
+    ]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex bg-background">
+      <List handleAddToCart={handleAddToCart} />
+      <Cart data={cartItems} />
     </div>
   );
 }
